@@ -1,0 +1,94 @@
+def isprime(num):
+    if num %2 == 0 and num != 2:
+        return False
+    for i in range(2, int(num ** 0.5) + 1):
+        if num % i == 0:
+            return False
+    return True
+
+def make_space(lst, length):
+    new_lst = []
+    for i in range(int((length - len(lst)) / 2)):
+        new_lst.append([])
+    new_lst.append(lst)
+    return new_lst
+
+
+def find_length(rows):
+    lst = [1 + 2 * i for i in range(rows)]
+    return lst[-1]
+
+
+def pattern(cell_no, rows):
+    pattern_rows = []
+    for row in range(1, rows + 1):
+        cell_row = []
+        num_cells = find_length(row)
+        for num in range(num_cells):
+            generated_no = [1 + (row - 1) * row + row * i for i in range(cell_no)]
+            new_lst = []
+            for i in generated_no:
+                i += num
+                new_lst.append(i)
+            cell_row.append(new_lst)
+        pattern_rows.append(cell_row)
+    return pattern_rows
+
+
+def change_to_pic(cell_no, rows):
+    for row in pattern(cell_no, rows):
+        new_row = []
+        for cell in row:
+            new_cell = []
+            for num in cell:
+                if isprime(num):
+                    new_cell.append('#')
+            new_row.append(new_cell)
+        reconfig_row = make_space(new_row, find_length(rows))
+        reconfig_str = ''
+        for cells in reconfig_row:
+            for cell in cells:
+                if '#' in cell:
+                    reconfig_str += '#'
+                else:
+                    reconfig_str += ' '
+            reconfig_str += ' '
+
+        print(reconfig_str)
+    print('\n')
+
+# print(change_to_pic(24, 31))
+
+#expected output:
+
+                              #
+                             # # 
+                            ## ## 
+                           # # # # 
+                          #### #### 
+                         #   # #   # 
+                        ###### ###### 
+                       # # # # # # # # 
+                      ## ## ## ## ## ## 
+                     # #   # # # #   # # 
+                    ########## ########## 
+                   #   # #   # #   # #   # 
+                  ############ ############ 
+                 # # #   # # # # # #   # # # 
+                ## #  ##  # ## ## #  ##  # ## 
+               # # # # # # # # # # # # # # # # 
+              ################ ################ 
+             #   # #   # #   # #   # #   # #   # 
+            ################## ################## 
+           # #   # # # #   # # # #   # # # #   # # 
+          ## ##  # ## #  ## ## ## ##  # ## #  ## ## 
+         # # # # #   # # # # # # # # # #   # # # # # 
+        ###################### ###################### 
+       #   # #   # #   # #   # #   # #   # #   # #   # 
+      #### #### #### #### #### #### #### #### #### #### 
+     # # # # # #   # # # # # # # # # # # #   # # # # # # 
+    ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## 
+   # # #   # # # # # #   # # # # # #   # # # # # #   # # # 
+  ############################ ############################ 
+ #     #   # #   # #   #     # #     #   # #   # #   #     # 
+############################## ############################## 
